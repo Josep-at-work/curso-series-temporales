@@ -1,0 +1,86 @@
+---
+title: "Series Temporales"
+author: "Josep R.C."
+date: "5/13/2021"
+output: 
+  html_document:
+    toc: true
+    top_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("~/Developer/GitHub/Courses/curso-series-temporales")
+```
+
+
+# Teoría
+
++ Según su estabilidad en el tiempo las series pueden ser: Estacionarias o No estacionarias.
++ Tendencias crecientes/decrecientes en el tiempo se dan cuando la los valores en lugar de fluctuar sobre la un valor van aumentando/disminuyendo. La tendencia es estable si el pendiente de está se mantiene constante. 
+
+### Grafico QQ plot
+
++ Qunatile-Quantile
+
++ Define la distribución del conjunto de datos.
+
+## Notebooks(PY) & Scripts(R)
+
+1. **Section 3**:
+  + [Notebook 1](https://colab.research.google.com/github/Josep-at-work/curso-series-temporales/blob/master/1.%20Introduccion%20a%20las%20series%20temporales/Python/1_Python_Introducci%C3%B3n_a_las_series_temporales.ipynb)
+  + First plots, lineplot and QQplot.
+
+2. **Section 4**: 
+  + **Python**
+    + [Notebook 2](https://colab.research.google.com/github/Josep-at-work/curso-series-temporales/blob/master/2.%20Serie%20temporal%20en%20R%20y%20Python/Python/2_Python_Objeto_serie_temporal.ipynb#scrollTo=xZYrVdyhe-w9)
+    + Correct datatypes(datetime)
+    + **Fecha como indice**, necesario para describir periodos de tiempo, para trabajar con series temporales
+    + Definir **Frecuencia persistente**
+    + **Missing values**
+    + **Simplificación del dataset**. Basicamente eliminación de todas las métricas que no usamos en el momento y nos quedamos con solo un campo.
+    + **Splitting data, train/test** para aplicar modelos de predicción más adelante.
+  
+  + **R**
+    + **Tiempo y Fecha**, POSIXt, lubridate y más -> Script 1
+    + **Trabajando con Objectos de serie temporal** -> Script 2
+    + **Objetos de series temporales (ts)** -> S2
+    + **Valores faltantes y outliers** *forecats*, *zoo* -> S2
+    + **Objetos ts Vs zoo** -> Script 3
+      + En resumen las librerias buenas son lubridate para dar el formato de datetime, zoo para tratar el objeto de serie de tiempo y dygraph más estética para los plots.
+      Zoo va bien para qualquier tipo de frecuencia mientras que ts es solo para frecuencia menusal trimestral o anual.
+      + Ojo al formato de los datos!! 
+        + Con lubridate no da problemas: `mdy_hms(vibration$datetime)` 
+        + Con strptime surgen NA's: `strptime(telemetry$datetime, format = "%d/%m/%Y %I:%M:%S %p")`
+
+3. **Section 5**:
+  + **Ruido Blanco**(WN): Serie temporal donde los datos no siguen ningún patrón.
+    + No Patron -> Futuro no predecible
+    + Características: **Media** ($\mu$) y **Varianza** ($\sigma^2$) **constante**, y no tener autocorrelaciones. 
+    + **Autocorrelación** se mide através de la correlació entre los valores en el período *t* y los valores en tiempos pasados ie. $corr(x_t, x_{t-1})$. 
+    + Comportamiento de los datos aleatorio. 
+    + [Notebook 3](https://colab.research.google.com/github/Josep-at-work/curso-series-temporales/blob/master/3.%20Caracter%C3%ADsticas%20fundamentales/Python/3_Trabajando_con_series_de_tiempo_en_Python_.ipynb#scrollTo=BlqDZsFS-6gX)
+      + Se crea ruido blanco y se compara este con la vibración de M1.
+      
+  + **Random Walk**: Serie temporal donde los valores tienden a persistir en el tiempo y las diferencias entre períodos son simplemente ruido blanco. 
+    + $x_t = x_{t-1} + \epsilon_t$,  $\epsilon_t = WN(\mu, \sigma^2)$
+
+Generación de ruido blanco en R: 
+
+```{r}
+WN <- function(N, mu, variance) {
+  x<-rnorm(n=N, mean=mu, 
+                  sd=sqrt(variance))
+ 
+  return(x)
+}
+ 
+wn<-WN(1000,0,0.0004)
+ 
+plot(wn, main="WHITE NOISE", 
+     xlab="t",
+     typ='l', col="red")
+```
+
+

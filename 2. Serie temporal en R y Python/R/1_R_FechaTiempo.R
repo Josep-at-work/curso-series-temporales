@@ -1,4 +1,4 @@
-### Librerías que necesitamos:
+### Librer?as que necesitamos:
 library(lubridate) 
 library(tseries)
 library(forecast)
@@ -6,23 +6,23 @@ library(forecast)
 
 
 
-### Opciones estándar en R base POSIXt: Portable Operating System Interface for Time (codificación estándar)
+### Opciones estÃ¡ndar en R base POSIXt: Portable Operating System Interface for Time (codificaciÃ³n estÃ¡ndar)
 
-x = as.POSIXct("2019-12-25 11:45:34") # Número de segundos
+x = as.POSIXct("2019-12-25 11:45:34") # NÃºmero de segundos
 
 y = as.POSIXlt("2019-12-25 11:45:34")
 
-x; y # Se obtiene lo mismo, pero qué hay detrás de esto? 
+x; y # Se obtiene lo mismo, pero que hay detrÃ¡s de esto? 
 
 unclass(x)
 
 unclass(y)
 
-# Qué significa este número 1577270734?
-# Es la cantidad de segundos que hay hasta esa fecha, desde el punto de referencia 01-01-1970 00:00:00:
+# QuÃ© significa este nÃºmero 1577270734?
+# Es la cantidad de segundos que hay hasta esa fecha, desde el punto de referencia 01-01-1970 00:00:00(no considera los aÃ±os bisiestos):
 
 # Time zone
-y$zone # Con POSIXlt podemos extraer componentes
+y$zone # Con POSIXlt podemos extraer y editar componentes
 
 x$zone # Con POSIXct no es posible porque solo devuelve el numero de segundos
 
@@ -35,11 +35,11 @@ x; class(x)
 
 unclass(x)
 
-50 * 365 - 5 # Numero de días desde 01-01-1970 (no considera los años bisiestos)
+50 * 365 - 5 # Numero de dÃ­as desde 01-01-1970 (no considera los aÃ±os bisiestos)
 
-### Otra forma: librería chron
+### Otra forma: librerÃ­a chron
 
-install.packages("chron")
+# install.packages("chron")
 library(chron)
 
 x = chron("12/25/2019", "23:34:09")
@@ -64,12 +64,12 @@ class(a)
 
 
 
-b = strptime(a, format = "%Y-%m-%d %H:%M") #format nos dice cómo se debe interpretar el texto
+b = strptime(a, format = "%Y-%m-%d %H:%M") #format nos dice cÃ³mo se debe interpretar el texto
 
 b; class(b)
 
 
-
+# lubridate
 
 ### Ahora vamos a usar el paquete lubridate que tiene funciones para manejar tiempos y fechas 
 # Formas diferentes de introducir fechas
@@ -113,14 +113,14 @@ mytimepoint
 
 
 
-## También se puede calcular el día de la semana que corresponde a nuestra fecha
+## TambiÃ©n se puede calcular el d?a de la semana que corresponde a nuestra fecha
 
 wday(mytimepoint)
 
 wday(mytimepoint, label=T, abbr=F) # los niveles que considera
 
 
-# Podemos ver en otra zona a qué fecha y hora corresponde
+# Podemos ver en otra zona a quÃ© fecha y hora corresponde
 
 with_tz(mytimepoint, tz = "Europe/London")
 
